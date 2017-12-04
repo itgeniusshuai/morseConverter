@@ -40,6 +40,10 @@ class MorseConverter extends Component{
                         placeholder={this.state.toMorse?'请输入英文':'请输入摩斯电码'} 
                         onChangeText={this.inputTextChange.bind(this)}
                         style={styles.input}
+                        numberOfLines ={12}
+                        keyboardType = 'ascii-capable'
+                        underlineColorAndroid = 'transparent'
+                        
                         value={this.state.sourceStr}></TextInput>
                     <Text>to</Text>
                     <TextInput selectTextOnFocus={true} multiline={true} editable={false} style={[styles.input]} value={this.state.morseStr}></TextInput>
@@ -124,6 +128,9 @@ const styles = StyleSheet.create({
         height : 200,
         borderWidth : 1,
         width : width - 20,
+        paddingLeft : 5,
+        paddingBottom : 0,
+        textAlignVertical : 'top'
 
     }
 });
