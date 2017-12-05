@@ -7,7 +7,9 @@ import {
   Switch,
   TextInput,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  Clipboard,
+  ToastAndroid,
 } from 'react-native';
 const {width,height} = Dimensions.get('window')
 
@@ -24,7 +26,7 @@ class MorseConverter extends Component{
     render(){
         return (
             <View style={styles.contaner}>
-                <Text style={{fontSize:18}}>摩丝电码转换器</Text>
+                <Text style={{fontSize:18}}>摩斯电码转换器</Text>
                 <View style={styles.title}>
                     <Text style={{textAlign:'center',lineHeight:20}}>{this.state.toMorse?'英文转换成摩斯电码':'摩斯电码转换成英文'}</Text>
                     <Switch value={this.state.toMorse} onValueChange={(value)=>{
@@ -40,18 +42,46 @@ class MorseConverter extends Component{
                         placeholder={this.state.toMorse?'请输入英文':'请输入摩斯电码'} 
                         onChangeText={this.inputTextChange.bind(this)}
                         style={styles.input}
+                        numberOfLines ={12}
+                        keyboardType = {this.state.toMorse?'email-address':'numeric'}
+                        underlineColorAndroid = 'transparent'
                         value={this.state.sourceStr}></TextInput>
                     <Text>to</Text>
-                    <TextInput selectTextOnFocus={true} multiline={true} editable={false} style={[styles.input]} value={this.state.morseStr}></TextInput>
+
+
+                    <TextInput 
+                        underlineColorAndroid = 'transparent'
+                        selectTextOnFocus={true} multiline={true} editable={false} style={styles.input} value={this.state.morseStr}></TextInput>
                 </View>
-                <TouchableOpacity onPress={()=>{
-                    this.setState({
-                        sourceStr :'',
-                        morseStr : ''
-                    })
-                }}>
-                    <Text>清空</Text>
-                </TouchableOpacity>
+                <View style={styles.bottomBtn}>
+                    <TouchableOpacity style={styles.btn} onPress={()=>{
+                        this.setState({
+                            sourceStr :'',
+                            morseStr : ''
+                        })
+                    }}>
+                        <Text style={{fontSize:15}}>清空</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.btn} onPress={()=>{
+                        if(this.state.morseStr == ''){
+                            try {
+                                ToastAndroid.show('内容为空，不复制！',ToastAndroid.SHORT);
+                              } catch (e) {
+                                ToastAndroid.show(e.message,ToastAndroid.SHORT);
+                            }
+                            return
+                        }
+                        Clipboard.setString(this.state.morseStr);
+                        try {
+                          ToastAndroid.show('转换后的内容已复制到粘贴板！',ToastAndroid.SHORT);
+                        } catch (e) {
+                          ToastAndroid.show(e.message,ToastAndroid.SHORT);
+                        }
+                    }}>
+                        <Text style={{fontSize:15}}>复制</Text>
+                    </TouchableOpacity>
+                </View>
+               
             </View>
         );
     }
@@ -105,7 +135,8 @@ const styles = StyleSheet.create({
         alignItems : 'center' ,
         justifyContent : 'flex-start',
         height : height,
-        paddingTop : 50
+        paddingTop : 30,
+        width : width
     },
     title : {
         flexDirection : 'row',
@@ -118,13 +149,31 @@ const styles = StyleSheet.create({
         // borderWidth : 1
     },
     content : {
-        flex : 8
+        // flex : 8
     },
     input : {
-        height : 200,
+        height : 150,
         borderWidth : 1,
         width : width - 20,
+        paddingLeft : 5,
+        paddingBottom : 0,
+        textAlignVertical : 'top'
 
+    },
+    bottomBtn:{
+        marginTop:5,
+        flexDirection : 'row',
+        justifyContent : 'flex-end',
+        alignItems : 'flex-start',
+        width:width,
+        paddingRight:5
+        // backgroundColor:'blue'
+    },
+    btn:{
+        marginLeft:15,
+        marginRight:5,
+        borderWidth:1,
+        borderRadius:2
     }
 });
 const db = {
