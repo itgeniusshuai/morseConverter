@@ -29,8 +29,8 @@ class  Remember extends Component{
 
   render(){
     return (
-      <View>
-        <Image source={require('./pic/morse_remember.jpg')} style={styles.image} resizeMode={'contain'}/>
+      <View style={{width:width,flexDirection:'row',justifyContent:'center'}}>
+        <Image source={require('./pic/morse_remember.jpeg')} style={styles.image} resizeMode={'contain'}/>
       </View>
     );
   }
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     height: 26,
   },
   image:{
-    width:width,
+    width:width-10,
     height:height - 26,
   }
 });
