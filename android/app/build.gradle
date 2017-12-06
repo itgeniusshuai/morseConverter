@@ -115,18 +115,17 @@ android {
             include "armeabi-v7a", "x86"
         }
     }
-    signingConfigs {
+	signingConfigs {
         release {
-            storeFile file("morse.jks")
-            storePassword "zhaoshuai"
-            keyAlias "key0"
-            keyPassword "zhaoshuai"
+            storeFile file('my-release-key.keystore')
+            storePassword 'zhaoshuai'
+            keyAlias 'my-key-alias'
+            keyPassword 'zhaoshuai'
         }
-    }
     buildTypes {
         release {
-            minifyEnabled false
-//            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.release
         }
     }
@@ -157,4 +156,5 @@ dependencies {
 task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
+}
 }
