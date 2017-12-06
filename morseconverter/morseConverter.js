@@ -9,11 +9,22 @@ import {
   Dimensions,
   TouchableOpacity,
   Clipboard,
+  Image,
   ToastAndroid,
 } from 'react-native';
 const {width,height} = Dimensions.get('window')
 
 class MorseConverter extends Component{
+    static navigationOptions = {
+        // tabBarLabel: 'UserScreen',
+        // Note: By default the icon is only shown on iOS. Search the showIcon option below.
+        tabBarIcon: ({ tintColor }) => (
+          <Image
+            source={require('./pic/converter.png')}
+            style={[styles.icon, {tintColor: tintColor}]}
+          />
+        ),
+      };
     constructor(props){
         super(props)
         this.state = {
@@ -174,7 +185,11 @@ const styles = StyleSheet.create({
         marginRight:5,
         borderWidth:1,
         borderRadius:2
-    }
+    },
+    icon: {
+        width: 26,
+        height: 26,
+    },
 });
 const db = {
     A:'.-',

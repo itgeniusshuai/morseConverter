@@ -10,7 +10,8 @@
 		"gradle": "^1.0.8",
 		"react": "16.0.0",
 		"react-native": "0.50.4",
-		"react-native-module": "0.0.1"
+		"react-native-module": "0.0.1",
+		"react-navigation": "^1.0.0-beta.21"
 	},
 	"devDependencies": {
 		"babel-jest": "21.2.0",
